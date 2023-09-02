@@ -16,6 +16,17 @@ TIMING = {
 }
 
 def main(offset, dst, actions, sleep=60, sync_every=60):
+
+    light.off()
+    time.sleep(2)
+    light.red()
+    time.sleep(2)
+    light.amber()
+    time.sleep(2)
+    light.green()
+    time.sleep(2)
+    light.off()
+
     cycle = 0
     while True:
         if cycle % sync_every == 0:
