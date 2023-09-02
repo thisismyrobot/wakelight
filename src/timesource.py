@@ -28,6 +28,6 @@ def sync():
     wlan.active(False)
 
 
-def time_of_day(offset, dst):
-    local_time = time.localtime(time.time() + ((offset + 1*dst) * 3600))
+def time_of_day(offset):
+    local_time = time.localtime(time.time() + (offset * 3600))
     return local_time[3] + (local_time[4] / 60)

@@ -1,3 +1,4 @@
+import machine
 import network
 import time
 
@@ -7,15 +8,19 @@ import timesource
 
 OFFSET = 10  # UTC+10
 DST = False  # TODO: Slider switch
+DST_PIN = machine.Pin(9, machine.Pin.IN, machine.Pin.PULL_UP)  # GPIO 9
 
 
-TIMING = {
+WINDOWS = {
     (5.5, 6): light.amber,
     (6, 10): light.green,
     (22, 5.75): light.red,
 }
 
-def main(offset, dst, actions, sleep=60, sync_every=60):
+def dst():
+    return not DST_PIN.value()
+
+def main(offset, windows, sleep=60, sync_every=60):
 
     light.off()
     time.sleep(2)
@@ -32,9 +37,9 @@ def main(offset, dst, actions, sleep=60, sync_every=60):
         if cycle % sync_every == 0:
             timesource.sync()
 
-        time_of_day = timesource.time_of_day(offset, dst)
+        time_of_day = timesource.time_of_day(offset + (dst() * 1))
 
-        for ((start, end), action) in actions.items():
+        for ((start, end), action) in windows.items():
             if end > start and time_of_day >= start and time_of_day <= end:
                 action()
                 break
@@ -49,4 +54,4 @@ def main(offset, dst, actions, sleep=60, sync_every=60):
 
 if __name__ == '__main__':
     time.sleep(5)
-    main(OFFSET, DST, TIMING)
+    main(OFFSET, WINDOWS)
