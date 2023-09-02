@@ -14,7 +14,7 @@ DST_PIN = machine.Pin(9, machine.Pin.IN, machine.Pin.PULL_UP)  # GPIO 9
 WINDOWS = {
     (5.5, 6): light.amber,
     (6, 10): light.green,
-    (22, 5.75): light.red,
+    (21.5, 5.75): light.red,
 }
 
 def dst():
