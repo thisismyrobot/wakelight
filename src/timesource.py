@@ -1,4 +1,4 @@
-import network
+import network  
 import ntptime
 import time
 
@@ -8,7 +8,7 @@ from credentials import SSID, PASSWORD
 MAXFAILS = 10
 
 
-def now():
+def sync():
     wlan = network.WLAN(network.STA_IF)
     time.sleep(2)
     wlan.active(True)
@@ -22,11 +22,12 @@ def now():
             machine.reset()
         time.sleep(1)
 
-    print(wlan.ifconfig())
-
-    print(time.localtime())
     ntptime.settime()
-    print(time.localtime())
 
     wlan.disconnect()
     wlan.active(False)
+
+
+def time_of_day(offset, dst):
+    local_time = time.localtime(time.time() + ((offset + 1*dst) * 3600))
+    return local_time[3] + (local_time[4] / 60)
