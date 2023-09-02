@@ -41,6 +41,8 @@ def main(offset, dst, actions, sleep=60, sync_every=60):
             elif end < start and (time_of_day >= end or time_of_day <= start):
                 action()
                 break
+            else:
+                light.off()
 
         time.sleep(sleep)
         cycle += 1
