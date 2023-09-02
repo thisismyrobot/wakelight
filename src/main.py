@@ -43,7 +43,7 @@ def main(offset, windows, sleep=60, sync_every=60):
             if end > start and time_of_day >= start and time_of_day <= end:
                 action()
                 break
-            elif end < start and (time_of_day >= end or time_of_day <= start):
+            elif end < start and (time_of_day >= start or time_of_day <= end):
                 action()
                 break
             else:
